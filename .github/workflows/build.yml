@@ -1,0 +1,38 @@
+name: Build FAP
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ufbt
+        run: pip install --upgrade ufbt
+
+      - name: Fetch SDK (release channel)
+        run: ufbt update --channel=release
+
+      - name: Build RailKey
+        run: ufbt
+
+      - name: Show build output
+        if: always()
+        run: ls -R .ufbt/build || true
+
+      - name: Upload FAP
+        uses: actions/upload-artifact@v4
+        with:
+          name: railkey-fap
+          path: .ufbt/build/*.fap
+          if-no-files-found: error

@@ -1,0 +1,13 @@
+App(
+    appid="railkey",
+    name="RailKey",
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="railkey_app",
+    stack_size=4 * 1024,
+    fap_category="RFID",
+    fap_description="Efficient 125 kHz RFID access-control fuzzer for authorized testing",
+    fap_author="fvtale",
+    fap_version="0.1",
+    fap_weburl="https://github.com/fvtale/railkey",
+    fap_icon="railkey.png",
+)

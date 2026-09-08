@@ -1,0 +1,11 @@
+# ufbt / fbt build output
+.ufbt/
+dist/
+*.fap
+*.fap.dSYM/
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
