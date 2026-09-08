@@ -3,6 +3,9 @@ App(
     name="RailKey",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="railkey_app",
+    # emu/railkey_emu.c is the browser-emulator front end and is built by
+    # datarail-site, not shipped in the on-device FAP.
+    sources=["railkey.c", "railkey_engine.c"],
     stack_size=4 * 1024,
     fap_category="RFID",
     fap_description="Efficient 125 kHz RFID access-control fuzzer for authorized testing",

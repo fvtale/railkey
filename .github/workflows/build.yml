@@ -28,11 +28,11 @@ jobs:
 
       - name: Show build output
         if: always()
-        run: ls -R .ufbt/build || true
+        run: ls -R dist || true
 
       - name: Upload FAP
         uses: actions/upload-artifact@v4
         with:
           name: railkey-fap
-          path: .ufbt/build/*.fap
+          path: dist/*.fap
           if-no-files-found: error
