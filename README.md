@@ -63,6 +63,16 @@ ufbt              # build -> .ufbt/build/railkey.fap
 ufbt launch       # build + install to a connected Flipper
 ```
 
+## Try it in the browser
+
+RailKey also runs in the datarail.org Flipper Zero emulator at
+**datarail.org/flipperzero** (select **RailKey**, press *Boot the app*). That
+build is [`emu/railkey_emu.c`](emu/railkey_emu.c) — a shim-compatible front end
+that renders on the 128x64 canvas and drives the **same**
+[`railkey_engine.c`](railkey_engine.c) the hardware app uses, so you watch the
+real Gray-code / structure-aware ordering step by step. No RF is transmitted in
+the browser — the emulator has no radio.
+
 ## Install
 
 Copy `railkey.fap` to `SD Card/apps/RFID/` on the Flipper (via qFlipper or the
@@ -86,4 +96,5 @@ You are responsible for how you use this. See [LICENSE](LICENSE) — no warranty
 - [`railkey.c`](railkey.c) — UI (view dispatcher), fuzz worker thread, LFRFID glue
 - [`railkey_engine.c`](railkey_engine.c) / [`railkey_engine.h`](railkey_engine.h) — sequence generators (pure C)
 - [`railkey.h`](railkey.h) — shared types
+- [`emu/railkey_emu.c`](emu/railkey_emu.c) — browser-emulator front end (shim-compatible, reuses the engine)
 - [`.github/workflows/build.yml`](.github/workflows/build.yml) — CI build
