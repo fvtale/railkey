@@ -223,6 +223,7 @@ int32_t railkey_emu_app(void* p) {
     e->settings.neighbor_radius = 25;
     e->settings.em_card_start = 0;
     e->settings.seed_card = 1234;
+    e->settings.dict_id = RailKeyDictAll;
 
     e->mutex = furi_mutex_alloc(FuriMutexTypeNormal);
     if(!e->mutex) {

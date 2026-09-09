@@ -359,6 +359,13 @@ static void railkey_setting_radius(VariableItem* item) {
     variable_item_set_current_value_text(item, t);
 }
 
+static void railkey_setting_dict(VariableItem* item) {
+    RailKey* app = variable_item_get_context(item);
+    uint8_t i = variable_item_get_current_value_index(item);
+    app->settings.dict_id = i;
+    variable_item_set_current_value_text(item, railkey_dict_name(i));
+}
+
 static void railkey_build_settings(RailKey* app) {
     VariableItem* item;
 
@@ -404,6 +411,12 @@ static void railkey_build_settings(RailKey* app) {
         snprintf(t, sizeof(t), "%u", (unsigned)k_radius_vals[ri]);
         variable_item_set_current_value_text(item, t);
     }
+
+    item = variable_item_list_add(
+        app->settings_list, "Dictionary", RailKeyDictCount, railkey_setting_dict, app);
+    if(app->settings.dict_id >= RailKeyDictCount) app->settings.dict_id = RailKeyDictAll;
+    variable_item_set_current_value_index(item, app->settings.dict_id);
+    variable_item_set_current_value_text(item, railkey_dict_name(app->settings.dict_id));
 }
 
 static bool railkey_nav_exit(void* ctx) {
@@ -422,6 +435,7 @@ static RailKey* railkey_alloc(void) {
     app->settings.neighbor_radius = 25;
     app->settings.em_card_start = 0;
     app->settings.seed_card = 0;
+    app->settings.dict_id = RailKeyDictAll;
     memset(app->settings.em_prefix, 0, sizeof(app->settings.em_prefix));
 
     app->run.mutex = furi_mutex_alloc(FuriMutexTypeNormal);

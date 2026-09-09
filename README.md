@@ -29,8 +29,10 @@ about (and unit-tested) on their own.
 
 ## Modes
 
-- **Dictionary sweep** — a short curated set of *generic factory/test* values
-  across EM4100, HID and Indala. Fast first pass.
+- **Dictionary sweep** — plays a curated dictionary of *generic factory/test*
+  and low-issuance seed values as a fast first pass. Pick which dictionary in
+  Settings (see [Dictionaries](#dictionaries)): **All formats**, **HID Prox 26**,
+  **EM4100 fob**, or **Indala 26**.
 - **HID smart sweep** — H10301 facility x card. Fix a facility, or sweep all 256.
   Card numbers are emitted in Gray-code order.
 - **EM4100 gray sweep** — 16-bit card counter in Gray order with a fixed prefix.
@@ -45,6 +47,28 @@ about (and unit-tested) on their own.
 - **HID facility** — facility used when not sweeping (0–255).
 - **HID fac sweep** — sweep all facilities in HID smart mode.
 - **Neighbor +/-** — radius for neighborhood mode.
+- **Dictionary** — which dictionary the Dictionary sweep uses.
+
+## Dictionaries
+
+The dictionary sweep is split into one list per 125 kHz format, so you can
+aim it at the class of reader you are authorized to test. They are ordered by
+how commonly each format turns up, and the **All formats** option runs them in
+that order:
+
+| Dictionary | Format | Typically seen on |
+| --- | --- | --- |
+| **HID Prox 26** | HID H10301 26-bit | commercial / office access readers |
+| **EM4100 fob** | EM4100 / EM410x | residential fobs, intercoms, gyms, amenities |
+| **Indala 26** | Indala 26-bit | legacy installs |
+
+Every entry is a **generic factory default, published sample, or low-issuance
+seed** — the same class of "default values" every RFID fuzzer ships. **None are
+real facility credentials, and none are tied to any specific site.** They just
+clear the obvious defaults quickly before you fall back to the structured
+sweeps (HID smart / EM gray / neighborhood), which are the exhaustive path. The
+lists live in [`railkey_engine.c`](railkey_engine.c) — add formats or seeds
+there. Use only on readers you own or are authorized to test.
 
 ## Build
 
